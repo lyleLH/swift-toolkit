@@ -1,13 +1,6 @@
 import Foundation
 
 public enum Environment {
-    private static let infoDictionary: [String: Any] = {
-        guard let dict = Bundle.main.infoDictionary else {
-            fatalError("Plist file not found")
-        }
-        return dict
-    }()
-    
     // MARK: - API Keys
     public static var googleFontsAPIKey: String {
         // 1. 首先尝试从环境变量获取
@@ -16,7 +9,7 @@ public enum Environment {
         }
         
         // 2. 然后尝试从 Info.plist 获取
-        if let key = infoDictionary["GOOGLE_FONTS_API_KEY"] as? String {
+        if let key = Bundle.main.object(forInfoDictionaryKey: "GOOGLE_FONTS_API_KEY") as? String {
             return key
         }
         
