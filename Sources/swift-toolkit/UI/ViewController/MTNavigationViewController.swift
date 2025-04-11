@@ -12,30 +12,35 @@ public class MTNavigationViewController: UINavigationController {
     var bgColor: UIColor = .white
     var isTranslucent = true
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-//        naviBarSetting()
-
+        setupAppearance()
     }
- 
-    private func naviBarSetting() {
+    
+    private func setupAppearance() {
+        // 设置导航栏外观
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBackground
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.label,
+            .font: UIFont.systemFont(ofSize: 17, weight: .semibold)
+        ]
         
-        for controlState in [UIControl.State.normal, UIControl.State.highlighted, UIControl.State.disabled] {
-            // swiftlint:disable line_length
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline) as Any], for: controlState)
-            // swiftlint:enable line_length
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.compactScrollEdgeAppearance = appearance
+        
+        // 设置返回按钮颜色
+        navigationBar.tintColor = .label
+    }
+    
+    public override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        // 设置返回按钮标题
+        if viewControllers.count > 0 {
+            viewController.navigationItem.backButtonTitle = ""
         }
-        
-        navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationBar.shadowImage = UIImage()
-        navigationBar.backgroundColor = bgColor
-        navigationBar.isTranslucent = isTranslucent
-        navigationBar.backItem?.backButtonDisplayMode = .minimal
-        //        navigationBar.tintColor = UIColor.dark
-        navigationBar.titleTextAttributes = [NSAttributedString.Key.font: 
-                                                UIFont.preferredFont(forTextStyle: .headline) as Any]
-        
+        super.pushViewController(viewController, animated: animated)
     }
 }

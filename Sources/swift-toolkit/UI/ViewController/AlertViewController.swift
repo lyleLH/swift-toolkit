@@ -173,7 +173,7 @@ public class AlertViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }

@@ -1,5 +1,27 @@
 import Foundation
 import UIKit
+import CoreText
+import CoreGraphics
+
+public enum FontError: LocalizedError {
+    case fontNotFound(String)
+    case fontRegistrationFailed(String)
+    case invalidURL(String)
+    case apiKeyMissing
+    
+    public var errorDescription: String? {
+        switch self {
+        case .fontNotFound(let family):
+            return "Font \(family) has not been downloaded"
+        case .fontRegistrationFailed(let family):
+            return "Failed to register font \(family)"
+        case .invalidURL(let url):
+            return "Invalid URL: \(url)"
+        case .apiKeyMissing:
+            return "Google Fonts API key is missing"
+        }
+    }
+}
 
 @MainActor
 public class FontDownloadManager {
@@ -29,7 +51,11 @@ public class FontDownloadManager {
         loadDownloadedFonts()
         
         // 注册所有已下载的字体
-        registerAllDownloadedFonts()
+        do {
+            try registerAllDownloadedFonts()
+        } catch {
+            print("Failed to register fonts: \(error)")
+        }
     }
     
     private func createFontsDirectoryIfNeeded() {
@@ -135,9 +161,12 @@ public class FontDownloadManager {
     
     // 注册所有已下载的字体
     public func registerAllDownloadedFonts() throws {
-        for fontFamily in downloadedFonts.keys {
-            if !registeredFonts.contains(fontFamily) {
+        for (fontFamily, _) in downloadedFonts {
+            do {
                 try registerFont(fontFamily: fontFamily)
+            } catch {
+                print("Failed to register font \(fontFamily): \(error)")
+                throw error
             }
         }
     }
