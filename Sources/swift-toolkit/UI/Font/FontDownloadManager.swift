@@ -182,17 +182,55 @@ public class FontDownloadManager {
     }
     
     // 便捷方法：获取已注册的字体
-    public func font(named fontFamily: String, size: CGFloat) -> UIFont? {
+    public func font(named fontFamily: String, size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont? {
         guard isFontRegistered(fontFamily) else { return nil }
-        return UIFont(name: fontFamily, size: size)
+        
+        // 获取该字体家族的所有可用字体名称
+        let availableFonts = UIFont.fontNames(forFamilyName: fontFamily)
+        
+        // 根据权重选择最合适的字体名称
+        let fontName = selectFontName(from: availableFonts, weight: weight)
+        
+        // 如果找到了合适的字体名称，创建字体
+        if let name = fontName {
+            return UIFont(name: name, size: size)
+        }
+        
+        return nil
+    }
+    
+    private func selectFontName(from fontNames: [String], weight: UIFont.Weight) -> String? {
+        // 根据权重选择最合适的字体名称
+        switch weight {
+        case .ultraLight:
+            return fontNames.first { $0.contains("UltraLight") || $0.contains("Thin") }
+        case .thin:
+            return fontNames.first { $0.contains("Thin") }
+        case .light:
+            return fontNames.first { $0.contains("Light") }
+        case .regular:
+            return fontNames.first { $0.contains("Regular") || !$0.contains(" ") }
+        case .medium:
+            return fontNames.first { $0.contains("Medium") }
+        case .semibold:
+            return fontNames.first { $0.contains("SemiBold") || $0.contains("DemiBold") }
+        case .bold:
+            return fontNames.first { $0.contains("Bold") }
+        case .heavy:
+            return fontNames.first { $0.contains("Heavy") }
+        case .black:
+            return fontNames.first { $0.contains("Black") }
+        default:
+            return fontNames.first
+        }
     }
     
     // 异步方法：获取字体
-    public func fontAsync(named fontFamily: String, size: CGFloat) async -> UIFont {
-        if let font = font(named: fontFamily, size: size) {
+    public func fontAsync(named fontFamily: String, size: CGFloat, weight: UIFont.Weight = .regular) async -> UIFont {
+        if let font = font(named: fontFamily, size: size, weight: weight) {
             return font
         }
-        return .systemFont(ofSize: size)
+        return .systemFont(ofSize: size, weight: weight)
     }
     
     public static func setupFonts() {
