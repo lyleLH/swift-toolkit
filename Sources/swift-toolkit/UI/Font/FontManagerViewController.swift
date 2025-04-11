@@ -65,7 +65,7 @@ public class FontManagerViewController: DefaultViewController {
         return label
     }()
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupSearchController()
