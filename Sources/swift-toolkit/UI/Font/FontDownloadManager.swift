@@ -11,20 +11,35 @@ public class FontDownloadManager {
     private var downloadedFonts: [String: URL] = [:]
     private var registeredFonts: Set<String> = []
     
+    private var fontsDirectoryURL: URL {
+        let applicationSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        return applicationSupport.appendingPathComponent("Fonts")
+    }
+    
     private init() {
         // 从 UserDefaults 恢复已注册的字体
         if let savedFonts = UserDefaults.standard.stringArray(forKey: registeredFontsKey) {
             registeredFonts = Set(savedFonts)
         }
         
+        // 确保字体目录存在
+        createFontsDirectoryIfNeeded()
+        
         // 加载已下载的字体
         loadDownloadedFonts()
     }
     
-    private func loadDownloadedFonts() {
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    private func createFontsDirectoryIfNeeded() {
         do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentsPath, includingPropertiesForKeys: nil)
+            try FileManager.default.createDirectory(at: fontsDirectoryURL, withIntermediateDirectories: true)
+        } catch {
+            print("Failed to create fonts directory: \(error)")
+        }
+    }
+    
+    private func loadDownloadedFonts() {
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: fontsDirectoryURL, includingPropertiesForKeys: nil)
             for url in fileURLs where url.pathExtension == "ttf" {
                 let fontName = url.deletingPathExtension().lastPathComponent
                 downloadedFonts[fontName] = url
@@ -74,9 +89,8 @@ public class FontDownloadManager {
         
         let (localURL, _) = try await URLSession.shared.download(from: url)
         
-        // 移动字体文件到应用程序的文档目录
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let destinationURL = documentsPath.appendingPathComponent("\(font.family).ttf")
+        // 移动字体文件到字体目录
+        let destinationURL = fontsDirectoryURL.appendingPathComponent("\(font.family).ttf")
         
         if FileManager.default.fileExists(atPath: destinationURL.path) {
             try FileManager.default.removeItem(at: destinationURL)
