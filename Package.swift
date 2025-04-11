@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "SwiftToolkit",
     platforms: [
-        .iOS(.v13),
-        .macOS(.v10_15)
+        .iOS(.v16),
+        .macOS(.v13)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -16,14 +16,22 @@ let package = Package(
             targets: ["SwiftToolkit"]),
     ],
     dependencies: [
-        // 这里可以添加依赖
+        .package(url: "https://github.com/relatedcode/ProgressHUD.git", from: "14.1.3"),
+        .package(url: "https://github.com/lyleLH/VisualEffectView.git", branch: "master"),
+        .package(url: "https://github.com/lyleLH/TwemojiKit.git", branch: "master"),
+        .package(url: "https://github.com/SVGKit/SVGKit.git", branch: "3.x")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SwiftToolkit",
-            dependencies: [],
+            dependencies: [
+                .product(name: "ProgressHUD", package: "ProgressHUD"),
+                .product(name: "VisualEffectView", package: "VisualEffectView"),
+                .product(name: "TwemojiKit", package: "TwemojiKit"),
+                .product(name: "SVGKit", package: "SVGKit")
+            ],
             path: "Sources/swift-toolkit"),
         .testTarget(
             name: "SwiftToolkitTests",
