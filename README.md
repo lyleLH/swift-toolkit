@@ -60,4 +60,25 @@ let formattedDate = date.formattedString()
 
 ## 许可证
 
-MIT License 
+MIT License
+
+## API Key Setup
+
+To use the Google Fonts API, you need to set up your API key:
+
+1. Get your Google Fonts API key from the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a `.env` file in the project root directory
+3. Add your API key to the `.env` file:
+   ```
+   GOOGLE_FONTS_API_KEY=your_api_key_here
+   ```
+
+## Security Notice
+
+Never commit your actual API key to the repository. The `.env` file is already in `.gitignore` to prevent accidental commits.
+
+## Development
+
+1. Clone the repository
+2. Copy `.env.example` to `.env` and add your API key
+3. Build and run the project 

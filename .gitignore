@@ -6,3 +6,11 @@ DerivedData/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# API Keys
+*APIKeys.swift
