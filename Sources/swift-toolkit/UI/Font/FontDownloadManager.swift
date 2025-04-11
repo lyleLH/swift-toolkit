@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 @MainActor
 public class FontDownloadManager {
@@ -7,6 +8,7 @@ public class FontDownloadManager {
     private let baseURL = "https://www.googleapis.com/webfonts/v1/webfonts"
     
     private var downloadedFonts: [String: URL] = [:]
+    private var registeredFonts: Set<String> = []
     
     private init() {}
     
@@ -58,9 +60,57 @@ public class FontDownloadManager {
         return destinationURL
     }
     
+    // 注册字体
+    public func registerFont(fontFamily: String) throws {
+        guard let fontURL = downloadedFonts[fontFamily] else {
+            throw NSError(domain: "Font not found", code: -1, userInfo: [NSLocalizedDescriptionKey: "Font \(fontFamily) has not been downloaded"])
+        }
+        
+        guard let fontData = try? Data(contentsOf: fontURL),
+              let provider = CGDataProvider(data: fontData as CFData),
+              let font = CGFont(provider) else {
+            throw NSError(domain: "Font registration failed", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to register font \(fontFamily)"])
+        }
+        
+        var error: Unmanaged<CFError>?
+        if !CTFontManagerRegisterGraphicsFont(font, &error) {
+            throw error?.takeRetainedValue() ?? NSError(domain: "Font registration failed", code: -1)
+        }
+        
+        registeredFonts.insert(fontFamily)
+    }
+    
+    // 注册所有已下载的字体
+    public func registerAllDownloadedFonts() throws {
+        for fontFamily in downloadedFonts.keys {
+            if !registeredFonts.contains(fontFamily) {
+                try registerFont(fontFamily: fontFamily)
+            }
+        }
+    }
+    
     // 获取已下载的字体列表
     public func getDownloadedFonts() -> [String: URL] {
         return downloadedFonts
+    }
+    
+    // 检查字体是否已注册
+    public func isFontRegistered(_ fontFamily: String) -> Bool {
+        return registeredFonts.contains(fontFamily)
+    }
+    
+    // 便捷方法：获取已注册的字体
+    public func font(named fontFamily: String, size: CGFloat) -> UIFont? {
+        guard isFontRegistered(fontFamily) else { return nil }
+        return UIFont(name: fontFamily, size: size)
+    }
+    
+    // 异步方法：获取字体
+    public func fontAsync(named fontFamily: String, size: CGFloat) async -> UIFont {
+        if let font = font(named: fontFamily, size: size) {
+            return font
+        }
+        return .systemFont(ofSize: size)
     }
 }
 
