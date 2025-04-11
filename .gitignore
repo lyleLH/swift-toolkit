@@ -12,3 +12,13 @@ DerivedData/
 .env.local
 .env.*.local
 
+# API Keys
+*APIKeys.swift
+
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
+

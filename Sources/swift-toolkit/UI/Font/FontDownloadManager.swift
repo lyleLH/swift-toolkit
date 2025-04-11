@@ -12,9 +12,14 @@ public class FontDownloadManager {
     
     // 搜索字体
     public func searchFonts(query: String) async throws -> [GoogleFont] {
+        let apiKey = Environment.googleFontsAPIKey
+        guard !apiKey.isEmpty else {
+            throw NSError(domain: "API Key Error", code: -1, userInfo: [NSLocalizedDescriptionKey: "Google Fonts API key is missing"])
+        }
+        
         var components = URLComponents(string: baseURL)
         components?.queryItems = [
-            URLQueryItem(name: "key", value: APIKeys.getGoogleFontsAPIKey()),
+            URLQueryItem(name: "key", value: apiKey),
             URLQueryItem(name: "sort", value: "popularity")
         ]
         
