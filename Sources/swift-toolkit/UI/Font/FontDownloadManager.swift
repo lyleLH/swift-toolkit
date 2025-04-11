@@ -6,11 +6,37 @@ public class FontDownloadManager {
     public static let shared = FontDownloadManager()
     
     private let baseURL = "https://www.googleapis.com/webfonts/v1/webfonts"
+    private let registeredFontsKey = "com.swift-toolkit.registeredFonts"
     
     private var downloadedFonts: [String: URL] = [:]
     private var registeredFonts: Set<String> = []
     
-    private init() {}
+    private init() {
+        // 从 UserDefaults 恢复已注册的字体
+        if let savedFonts = UserDefaults.standard.stringArray(forKey: registeredFontsKey) {
+            registeredFonts = Set(savedFonts)
+        }
+        
+        // 加载已下载的字体
+        loadDownloadedFonts()
+    }
+    
+    private func loadDownloadedFonts() {
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentsPath, includingPropertiesForKeys: nil)
+            for url in fileURLs where url.pathExtension == "ttf" {
+                let fontName = url.deletingPathExtension().lastPathComponent
+                downloadedFonts[fontName] = url
+            }
+        } catch {
+            print("Failed to load downloaded fonts: \(error)")
+        }
+    }
+    
+    private func saveRegisteredFonts() {
+        UserDefaults.standard.set(Array(registeredFonts), forKey: registeredFontsKey)
+    }
     
     // 搜索字体
     public func searchFonts(query: String) async throws -> [GoogleFont] {
@@ -78,6 +104,7 @@ public class FontDownloadManager {
         }
         
         registeredFonts.insert(fontFamily)
+        saveRegisteredFonts()
     }
     
     // 注册所有已下载的字体
