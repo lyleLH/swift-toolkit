@@ -194,6 +194,18 @@ public class FontDownloadManager {
         }
         return .systemFont(ofSize: size)
     }
+    
+    public static func setupFonts() {
+        do {
+            try shared.registerAllDownloadedFonts()
+        } catch {
+            print("Failed to register fonts: \(error)")
+        }
+    }
+    
+    public func getRegisteredFonts() -> Set<String> {
+        return registeredFonts
+    }
 }
 
 // 数据模型
