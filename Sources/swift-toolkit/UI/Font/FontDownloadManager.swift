@@ -4,7 +4,6 @@ import Foundation
 public class FontDownloadManager {
     public static let shared = FontDownloadManager()
     
-    private let googleFontsAPIKey = "XXXXX"
     private let baseURL = "https://www.googleapis.com/webfonts/v1/webfonts"
     
     private var downloadedFonts: [String: URL] = [:]
@@ -15,7 +14,7 @@ public class FontDownloadManager {
     public func searchFonts(query: String) async throws -> [GoogleFont] {
         var components = URLComponents(string: baseURL)
         components?.queryItems = [
-            URLQueryItem(name: "key", value: googleFontsAPIKey),
+            URLQueryItem(name: "key", value: APIKeys.getGoogleFontsAPIKey()),
             URLQueryItem(name: "sort", value: "popularity")
         ]
         
@@ -95,4 +94,4 @@ public struct GoogleFont: Codable {
         self.variants = variants
         self.subsets = subsets
     }
-} 
+}
