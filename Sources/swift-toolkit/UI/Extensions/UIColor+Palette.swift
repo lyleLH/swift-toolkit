@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
 
     static var dream: UIColor {
         return #colorLiteral(red: 1, green: 0.3491985798, blue: 0.7414608598, alpha: 1)

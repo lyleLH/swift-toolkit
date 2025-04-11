@@ -35,7 +35,7 @@ private actor TwemojiTaskManager {
     }
 }
 
-extension UIImage {
+public extension UIImage {
     private static let cacheFolderName = "TwemojiCache"
     private static let maxConcurrentLoads = 5
     private static let loadSemaphore = DispatchSemaphore(value: maxConcurrentLoads)

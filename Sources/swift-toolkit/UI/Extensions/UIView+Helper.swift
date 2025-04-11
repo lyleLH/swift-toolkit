@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
 
 	@IBInspectable
 	public var cornerRadius: CGFloat {
@@ -47,7 +47,7 @@ extension UIView {
 	}
 }
 
-extension UIView {
+public extension UIView {
     
     var size: CGSize {
         return bounds.size
@@ -84,7 +84,7 @@ extension UIView {
     }
 }
 
-extension UIView {
+public extension UIView {
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let maskPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let maskLayer = CAShapeLayer()
@@ -94,7 +94,7 @@ extension UIView {
     }
 }
 
-extension UIView {
+public extension UIView {
 
     // Using a function since `var image` might conflict with an existing variable
     // (like on `UIImageView`)

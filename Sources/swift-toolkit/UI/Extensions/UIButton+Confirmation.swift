@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIButton {
+public extension UIButton {
     enum ConfirmationStyle {
         case primary
         case destructive

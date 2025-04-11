@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     func getPixelColor(pos: CGPoint) -> UIColor? {
         guard let cgImage = cgImage else { return nil }
         
