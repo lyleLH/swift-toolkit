@@ -8,37 +8,37 @@
 import UIKit
 import ProgressHUD
 
-public class DefaultViewController: UIViewController {
+open class DefaultViewController: UIViewController {
 
-    var navigationBarHidden: Bool {
+    open var navigationBarHidden: Bool {
         return false
     }
     
-    var navigationBarIsTranslucent: Bool {
+    open var navigationBarIsTranslucent: Bool {
         return false
     }
     
-    var navigationBarBackgroundColor: UIColor {
+    open var navigationBarBackgroundColor: UIColor {
         return .white
     }
     
-    var navigationBarTintColor: UIColor {
+    open var navigationBarTintColor: UIColor {
         return .black
     }
     
-    var navigationViewBackgroundColor: UIColor {
+    open var navigationViewBackgroundColor: UIColor {
         return .white
     }
     
-    var isBackButtonHasBackground: Bool {
+    open var isBackButtonHasBackground: Bool {
         return false
     }
 
-    var defaultNavigationController: DefaultNavigationViewController? {
+    open var defaultNavigationController: DefaultNavigationViewController? {
         return navigationController as? DefaultNavigationViewController
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
 //        navigationItem.leftItemsSupplementBackButton = true
@@ -46,7 +46,7 @@ public class DefaultViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
  
-    public override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if let parent: DefaultViewController = parent as? DefaultViewController {
@@ -82,24 +82,24 @@ public class DefaultViewController: UIViewController {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
  
-    public override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
        
     }
 
-    public override func viewDidDisappear(_ animated: Bool) {
+    open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
    
     }
  
 }
 
-extension UIViewController {
+public extension UIViewController {
     
     func parentOrNavVC() -> UIViewController? {
         return self.navigationController ?? self.parent
@@ -124,7 +124,7 @@ extension UIViewController {
 
 }
 
-extension UIViewController: @retroactive UIAdaptivePresentationControllerDelegate {
+extension UIViewController: UIAdaptivePresentationControllerDelegate {
     
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
