@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CloseButton: DefaultButton {
+public class CloseButton: DefaultButton {
 	
 	override func commonInit() {
 		super.commonInit()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DefaultButton: UIButton {
+public class DefaultButton: UIButton {
 	
 	func commonInit() {
 		// to be override by subclas

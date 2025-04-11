@@ -8,12 +8,12 @@
 
 import UIKit
 
-struct FontName {
-	static let regular = "Poppins-Regular"
-	static let bold = "Poppins-Bold"
-	static let semiBold = "Poppins-SemiBold"
-	static let medium = "Poppins-Medium"
-	static let lightAlt = "Poppins-Light"
+public struct FontName {
+	public static let regular = "Poppins-Regular"
+	public static let bold = "Poppins-Bold"
+	public static let semiBold = "Poppins-SemiBold"
+	public static let medium = "Poppins-Medium"
+	public static let lightAlt = "Poppins-Light"
 }
 
 extension UIFontDescriptor.AttributeName {
@@ -22,7 +22,7 @@ extension UIFontDescriptor.AttributeName {
 
 extension UIFont {
 	
-    class func fontNameForStyle(style: UIFont.TextStyle) -> String {
+    public class func fontNameForStyle(style: UIFont.TextStyle) -> String {
 
         switch style {
         case .largeTitle:

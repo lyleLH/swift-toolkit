@@ -9,7 +9,7 @@
 import UIKit
 import VisualEffectView
 
-class WhiteBlurView: UIView {
+public class WhiteBlurView: UIView {
 
     var blurEffectView: VisualEffectView = VisualEffectView(frame: .zero)
     override init(frame: CGRect) {
@@ -29,7 +29,7 @@ class WhiteBlurView: UIView {
         blurEffectView.scale = 1
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         blurEffectView.frame = bounds
     }

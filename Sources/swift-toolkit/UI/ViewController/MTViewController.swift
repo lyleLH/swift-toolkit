@@ -7,9 +7,9 @@
 
 import UIKit
 
-class MTViewController: UIViewController {
+public class MTViewController: UIViewController {
     
-    var navigationBarHidden: Bool {
+    public var navigationBarHidden: Bool {
         return false
     }
     
@@ -29,7 +29,7 @@ class MTViewController: UIViewController {
         return .white
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if let parent: MTViewController = parent as? MTViewController {

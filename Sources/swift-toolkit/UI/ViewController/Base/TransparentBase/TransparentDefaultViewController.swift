@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TransparentDefaultViewController: DefaultViewController {
+public class TransparentDefaultViewController: DefaultViewController {
     
     override var navigationBarBackgroundColor: UIColor {
         .clear
@@ -29,7 +29,7 @@ class TransparentDefaultViewController: DefaultViewController {
         true
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
     }
