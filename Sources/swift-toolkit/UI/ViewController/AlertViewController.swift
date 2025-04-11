@@ -1,7 +1,7 @@
 import UIKit
 
  
-final class AlertViewController: UIViewController {
+public class AlertViewController: UIViewController {
     
     // MARK: - Types
     enum ButtonType {

@@ -11,7 +11,7 @@ public enum CustomFont: String {
     case poppinsBold = "Poppins-Bold"
     case poppinsExtraBold = "Poppins-ExtraBold"
     
-    public func font(size: CGFloat) -> UIFont {
+    func font(size: CGFloat) -> UIFont {
         if let customFont = UIFont(name: self.rawValue, size: size) {
 //            print("✅ 成功加载字体: \(self.rawValue)")
             return customFont

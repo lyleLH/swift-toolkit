@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MTNavigationViewController: UINavigationController {
+public class MTNavigationViewController: UINavigationController {
 
     var bgColor: UIColor = .white
     var isTranslucent = true

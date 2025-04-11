@@ -99,7 +99,15 @@ class FontPreviewCell: BaseCollectionViewCell {
         
         if isDownloaded {
             if let fontURL = FontDownloadManager.shared.getDownloadedFonts()[font.family] {
-                loadLocalFont(from: fontURL, fontFamily: font.family)
+                // 确保字体已注册
+                do {
+                    try FontDownloadManager.shared.registerFont(fontFamily: font.family)
+                    loadLocalFont(from: fontURL, fontFamily: font.family)
+                } catch {
+                    print("Failed to register font: \(error)")
+                    // 如果注册失败，回退到 Web 字体
+                    loadWebFont(font)
+                }
             }
         } else {
             loadWebFont(font)
@@ -183,88 +191,73 @@ class FontPreviewCell: BaseCollectionViewCell {
     }
     
     private func loadLocalFont(from url: URL, fontFamily: String) {
-        do {
-            let fontData = try Data(contentsOf: url)
-            if let dataProvider = CGDataProvider(data: fontData as CFData),
-               let cgFont = CGFont(dataProvider) {
-                var error: Unmanaged<CFError>?
-                if CTFontManagerRegisterGraphicsFont(cgFont, &error) {
-                    // 获取示例文本
-                    let (primaryText, secondaryText) = getExampleTexts(for: currentFont)
-                    let showSecondaryText = secondaryText != nil
-                    
-                    let html = """
-                    <html>
-                    <head>
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                        <style>
-                            @font-face {
-                                font-family: '\(fontFamily)';
-                                src: local('\(fontFamily)');
-                            }
-                            * {
-                                margin: 0;
-                                padding: 0;
-                                box-sizing: border-box;
-                            }
-                            html, body {
-                                height: 100%;
-                                margin: 0;
-                                padding: 0;
-                                background-color: transparent;
-                            }
-                            body {
-                                padding: 0 16px;
-                                font-family: '\(fontFamily)', sans-serif;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                            }
-                            .font-name {
-                                font-size: 18px;
-                                font-weight: 700;
-                                margin-bottom: 4px;
-                                padding-right: 48px;
-                                color: var(--text-color);
-                            }
-                            .preview-text {
-                                font-size: 15px;
-                                line-height: 1.4;
-                                color: var(--secondary-text-color);
-                                margin-bottom: \(showSecondaryText ? "4px" : "0");
-                            }
-                            .secondary-text {
-                                font-size: 15px;
-                                line-height: 1.4;
-                                color: var(--secondary-text-color);
-                            }
-                            @media (prefers-color-scheme: dark) {
-                                :root {
-                                    --text-color: #FFFFFF;
-                                    --secondary-text-color: rgba(255, 255, 255, 0.7);
-                                }
-                            }
-                            @media (prefers-color-scheme: light) {
-                                :root {
-                                    --text-color: #000000;
-                                    --secondary-text-color: rgba(0, 0, 0, 0.7);
-                                }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="font-name">\(fontFamily)</div>
-                        <div class="preview-text">\(primaryText)</div>
-                        \(secondaryText.map { "<div class=\"secondary-text\">\($0)</div>" } ?? "")
-                    </body>
-                    </html>
-                    """
-                    webView.loadHTMLString(html, baseURL: nil)
+        // 获取示例文本
+        let (primaryText, secondaryText) = getExampleTexts(for: currentFont)
+        let showSecondaryText = secondaryText != nil
+        
+        let html = """
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
                 }
-            }
-        } catch {
-            print("Error loading font: \(error)")
-        }
+                html, body {
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                    background-color: transparent;
+                }
+                body {
+                    padding: 0 16px;
+                    font-family: '\(fontFamily)', -apple-system, sans-serif;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+                .font-name {
+                    font-size: 18px;
+                    font-weight: 700;
+                    margin-bottom: 4px;
+                    padding-right: 48px;
+                    color: var(--text-color);
+                }
+                .preview-text {
+                    font-size: 15px;
+                    line-height: 1.4;
+                    color: var(--text-color);
+                    margin-bottom: \(showSecondaryText ? "4px" : "0");
+                }
+                .secondary-text {
+                    font-size: 15px;
+                    line-height: 1.4;
+                    color: var(--text-color);
+                    opacity: 0.7;
+                }
+                @media (prefers-color-scheme: dark) {
+                    :root {
+                        --text-color: #FFFFFF;
+                    }
+                }
+                @media (prefers-color-scheme: light) {
+                    :root {
+                        --text-color: #000000;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="font-name">\(fontFamily)</div>
+            <div class="preview-text">\(primaryText)</div>
+            \(secondaryText.map { "<div class=\"secondary-text\">\($0)</div>" } ?? "")
+        </body>
+        </html>
+        """
+        
+        webView.loadHTMLString(html, baseURL: nil)
     }
     
     private func getExampleTexts(for font: GoogleFont?) -> (primary: String, secondary: String?) {

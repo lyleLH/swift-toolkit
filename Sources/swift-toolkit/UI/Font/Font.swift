@@ -52,7 +52,7 @@ extension UIFont {
         }
     }
     
-    class func sizeForStyle(style: UIFont.TextStyle) -> CGFloat {
+    public class func sizeForStyle(style: UIFont.TextStyle) -> CGFloat {
         switch style {
         case .largeTitle:
             return 34
@@ -81,27 +81,27 @@ extension UIFont {
         }
     }
     
-    @objc class func fontWeight600(ofSize size: CGFloat) -> UIFont {
+    @objc public class func fontWeight600(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: FontName.semiBold, size: size)!
     }
     
-	@objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
+	@objc public class func mySystemFont(ofSize size: CGFloat) -> UIFont {
 		return UIFont(name: FontName.regular, size: size)!
 	}
 
-	@objc class func myBoldSystemFont(ofSize size: CGFloat) -> UIFont {
+	@objc public class func myBoldSystemFont(ofSize size: CGFloat) -> UIFont {
 		return UIFont(name: FontName.semiBold, size: size)!
 	}
 
-	@objc class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
+	@objc public class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
 		return UIFont(name: FontName.lightAlt, size: size)!
 	}
 	
-	@objc class func myPreferedFont(textStyle: TextStyle) -> UIFont {
+	@objc public class func myPreferedFont(textStyle: TextStyle) -> UIFont {
 		return UIFont(name: fontNameForStyle(style: textStyle), size: sizeForStyle(style: textStyle))!
 	}
 
-	@objc convenience init(myCoder aDecoder: NSCoder) {
+	@objc public convenience init(myCoder aDecoder: NSCoder) {
 		guard let fontDescriptor = aDecoder.decodeObject(forKey: "UIFontDescriptor") as? UIFontDescriptor,
 			let fontAttribute = fontDescriptor.fontAttributes[.nsctFontUIUsage] as? String else {
 			self.init(myCoder: aDecoder)

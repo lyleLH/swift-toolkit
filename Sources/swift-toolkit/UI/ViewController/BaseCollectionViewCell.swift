@@ -1,6 +1,6 @@
 import UIKit
 
-class BaseCollectionViewCell: UICollectionViewCell {
+public class BaseCollectionViewCell: UICollectionViewCell {
     
     private let colorView: UIView = {
         let view = UIView()

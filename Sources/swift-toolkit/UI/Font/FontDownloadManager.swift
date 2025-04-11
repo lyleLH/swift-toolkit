@@ -27,6 +27,9 @@ public class FontDownloadManager {
         
         // 加载已下载的字体
         loadDownloadedFonts()
+        
+        // 注册所有已下载的字体
+        registerAllDownloadedFonts()
     }
     
     private func createFontsDirectoryIfNeeded() {
@@ -103,22 +106,31 @@ public class FontDownloadManager {
     // 注册字体
     public func registerFont(fontFamily: String) throws {
         guard let fontURL = downloadedFonts[fontFamily] else {
-            throw NSError(domain: "Font not found", code: -1, userInfo: [NSLocalizedDescriptionKey: "Font \(fontFamily) has not been downloaded"])
+            throw FontError.fontNotFound(fontFamily)
         }
         
-        guard let fontData = try? Data(contentsOf: fontURL),
-              let provider = CGDataProvider(data: fontData as CFData),
-              let font = CGFont(provider) else {
-            throw NSError(domain: "Font registration failed", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to register font \(fontFamily)"])
+        // 如果字体已经注册，直接返回
+        if registeredFonts.contains(fontFamily) {
+            return
         }
         
-        var error: Unmanaged<CFError>?
-        if !CTFontManagerRegisterGraphicsFont(font, &error) {
-            throw error?.takeRetainedValue() ?? NSError(domain: "Font registration failed", code: -1)
+        do {
+            let fontData = try Data(contentsOf: fontURL)
+            if let dataProvider = CGDataProvider(data: fontData as CFData),
+               let cgFont = CGFont(dataProvider) {
+                var error: Unmanaged<CFError>?
+                if CTFontManagerRegisterGraphicsFont(cgFont, &error) {
+                    registeredFonts.insert(fontFamily)
+                    saveRegisteredFonts()
+                } else {
+                    throw FontError.fontRegistrationFailed(fontFamily)
+                }
+            } else {
+                throw FontError.fontRegistrationFailed(fontFamily)
+            }
+        } catch {
+            throw FontError.fontRegistrationFailed(fontFamily)
         }
-        
-        registeredFonts.insert(fontFamily)
-        saveRegisteredFonts()
     }
     
     // 注册所有已下载的字体
