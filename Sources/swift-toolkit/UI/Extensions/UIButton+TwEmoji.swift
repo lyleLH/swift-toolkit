@@ -16,13 +16,12 @@ public extension UIButton {
         let button = TweMojiButton(type: .custom)
         Task {
            do {
-               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size)
+               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size ?? CGSize(width: 24, height: 24))
                DispatchQueue.main.async {
                    button.setImage(image, for: .normal)
                }
-           } catch {
-               print("Failed to load emoji for button: \(error)")
            }
+       }
         return button
     }
     
