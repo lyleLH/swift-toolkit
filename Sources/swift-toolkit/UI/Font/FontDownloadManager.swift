@@ -132,11 +132,13 @@ public class FontDownloadManager {
     // 注册字体
     public func registerFont(fontFamily: String) throws {
         guard let fontURL = downloadedFonts[fontFamily] else {
+            print("Font not found in downloaded fonts: \(fontFamily)")
             throw FontError.fontNotFound(fontFamily)
         }
         
         // 如果字体已经注册，直接返回
         if registeredFonts.contains(fontFamily) {
+            print("Font already registered: \(fontFamily)")
             return
         }
         
@@ -148,13 +150,21 @@ public class FontDownloadManager {
                 if CTFontManagerRegisterGraphicsFont(cgFont, &error) {
                     registeredFonts.insert(fontFamily)
                     saveRegisteredFonts()
+                    print("Successfully registered font: \(fontFamily)")
+                    
+                    // 打印可用的字体名称
+                    let availableFonts = UIFont.fontNames(forFamilyName: fontFamily)
+                    print("Available fonts for family \(fontFamily): \(availableFonts)")
                 } else {
+                    print("Failed to register font with CTFontManager: \(fontFamily)")
                     throw FontError.fontRegistrationFailed(fontFamily)
                 }
             } else {
+                print("Failed to create CGFont: \(fontFamily)")
                 throw FontError.fontRegistrationFailed(fontFamily)
             }
         } catch {
+            print("Error registering font: \(error)")
             throw FontError.fontRegistrationFailed(fontFamily)
         }
     }
@@ -183,23 +193,36 @@ public class FontDownloadManager {
     
     // 便捷方法：获取已注册的字体
     public func font(named fontFamily: String, size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont? {
-        guard isFontRegistered(fontFamily) else { return nil }
+        guard isFontRegistered(fontFamily) else {
+            print("Font not registered: \(fontFamily)")
+            return nil
+        }
         
         // 获取该字体家族的所有可用字体名称
         let availableFonts = UIFont.fontNames(forFamilyName: fontFamily)
+        print("Available fonts for family \(fontFamily): \(availableFonts)")
         
         // 根据权重选择最合适的字体名称
         let fontName = selectFontName(from: availableFonts, weight: weight)
+        print("Selected font name: \(String(describing: fontName))")
         
         // 如果找到了合适的字体名称，创建字体
         if let name = fontName {
-            return UIFont(name: name, size: size)
+            let font = UIFont(name: name, size: size)
+            if font == nil {
+                print("Failed to create font with name: \(name)")
+            }
+            return font
         }
         
+        print("No suitable font name found for family: \(fontFamily), weight: \(weight)")
         return nil
     }
     
     private func selectFontName(from fontNames: [String], weight: UIFont.Weight) -> String? {
+        print("Selecting font name for weight: \(weight)")
+        print("Available font names: \(fontNames)")
+        
         // 根据权重选择最合适的字体名称
         switch weight {
         case .ultraLight:
@@ -209,7 +232,16 @@ public class FontDownloadManager {
         case .light:
             return fontNames.first { $0.contains("Light") }
         case .regular:
-            return fontNames.first { $0.contains("Regular") || !$0.contains(" ") }
+            // 首先尝试找到 Regular 或没有字重标记的字体
+            if let regular = fontNames.first(where: { $0.contains("Regular") }) {
+                return regular
+            }
+            // 如果没有 Regular，尝试找到没有字重标记的字体
+            if let noWeight = fontNames.first(where: { !$0.contains(" ") }) {
+                return noWeight
+            }
+            // 如果还是没有，返回第一个字体
+            return fontNames.first
         case .medium:
             return fontNames.first { $0.contains("Medium") }
         case .semibold:
