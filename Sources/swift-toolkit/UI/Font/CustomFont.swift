@@ -1,6 +1,6 @@
 import UIKit
 
-enum CustomFont: String {
+public enum CustomFont: String {
     // 中文字体
     case huiwenRegular = "Huiwen-mincho"
     
