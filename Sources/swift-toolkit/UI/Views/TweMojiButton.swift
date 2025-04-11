@@ -7,32 +7,31 @@
 
 import UIKit
 
-class TweMojiButton: DefaultButton {
+open class TweMojiButton: DefaultButton {
     
     private let blurView = DefaultBlurView(frame: .zero)
     
-    var blurRadius: CGFloat {
+    public var blurRadius: CGFloat {
         get { blurView.blurRadius }
         set { blurView.blurRadius = newValue }
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupBlurView()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupBlurView()
     }
     
     private func setupBlurView() {
         // 将模糊视图插入到按钮的背景视图层
- 
         backgroundColor = .clear
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         // 让模糊视图填充整个按钮的背景区域
         if let backgroundView = subviews.first {
@@ -44,12 +43,12 @@ class TweMojiButton: DefaultButton {
     
     // 便利方法设置暗色或亮色模糊效果
     @MainActor
-    func useDarkEffect() {
+    public func useDarkEffect() {
         blurView.usingDarkEffect()
     }
     
     @MainActor
-    func useWhiteEffect() {
+    public func useWhiteEffect() {
         blurView.usingWhiteEffect()
     }
 } 

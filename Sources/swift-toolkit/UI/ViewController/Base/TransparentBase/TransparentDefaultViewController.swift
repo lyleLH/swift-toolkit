@@ -7,32 +7,29 @@
 
 import UIKit
 
-public class TransparentDefaultViewController: DefaultViewController {
+open class TransparentDefaultViewController: DefaultViewController {
     
-    override var navigationBarBackgroundColor: UIColor {
+    open override var navigationBarBackgroundColor: UIColor {
         .clear
     }
     
-    override var navigationBarIsTranslucent: Bool {
+    open override var navigationBarIsTranslucent: Bool {
         true
     }
     
-    override var navigationBarTintColor: UIColor {
+    open override var navigationBarTintColor: UIColor {
         .white
     }
     
-    override var navigationViewBackgroundColor: UIColor {
+    open override var navigationViewBackgroundColor: UIColor {
         .clear
     }
     
-    override var isBackButtonHasBackground: Bool {
+    open override var isBackButtonHasBackground: Bool {
         true
     }
 
-    public override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-     
     }
-    
-    
 }
