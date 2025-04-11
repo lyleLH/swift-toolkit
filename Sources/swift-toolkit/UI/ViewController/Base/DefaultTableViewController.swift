@@ -7,29 +7,29 @@
 
 import UIKit
 
-class DefaultTableViewController: UITableViewController {
+open class DefaultTableViewController: UITableViewController {
 
-    var navigationBarHidden: Bool {
+    open var navigationBarHidden: Bool {
         return false
     }
     
-    var navigationBarIsTranslucent: Bool {
+    open var navigationBarIsTranslucent: Bool {
         return false
     }
     
-    var navigationBarBackgroundColor: UIColor {
+    open var navigationBarBackgroundColor: UIColor {
         return .white
     }
     
-    var navigationBarTintColor: UIColor {
+    open var navigationBarTintColor: UIColor {
         return .black
     }
     
-    var navigationViewBackgroundColor: UIColor {
+    open var navigationViewBackgroundColor: UIColor {
         return .white
     }
     
-    var defaultNavigationController: DefaultNavigationViewController? {
+    open var defaultNavigationController: DefaultNavigationViewController? {
         return navigationController as? DefaultNavigationViewController
     }
     
@@ -39,7 +39,7 @@ class DefaultTableViewController: UITableViewController {
         return transitionbBlurView
     }()
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.leftItemsSupplementBackButton = true
@@ -47,7 +47,7 @@ class DefaultTableViewController: UITableViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
      
         if let parent: DefaultViewController = parent as? DefaultViewController {
@@ -81,22 +81,17 @@ class DefaultTableViewController: UITableViewController {
         }
         
         navigationController?.setNeedsStatusBarAppearanceUpdate()
-
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
     }
-  
 }

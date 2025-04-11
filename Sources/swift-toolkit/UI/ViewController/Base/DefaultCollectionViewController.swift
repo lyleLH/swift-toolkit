@@ -7,29 +7,29 @@
 
 import UIKit
 
-class DefaultCollectionViewController: UICollectionViewController {
+open class DefaultCollectionViewController: UICollectionViewController {
 
-    var navigationBarHidden: Bool {
+    open var navigationBarHidden: Bool {
         return false
     }
     
-    var navigationBarIsTranslucent: Bool {
+    open var navigationBarIsTranslucent: Bool {
         return false
     }
     
-    var navigationBarBackgroundColor: UIColor {
+    open var navigationBarBackgroundColor: UIColor {
         return .white
     }
     
-    var navigationBarTintColor: UIColor {
+    open var navigationBarTintColor: UIColor {
         return .black
     }
     
-    var navigationViewBackgroundColor: UIColor {
+    open var navigationViewBackgroundColor: UIColor {
         return .white
     }
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftItemsSupplementBackButton = true
@@ -37,11 +37,11 @@ class DefaultCollectionViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
     }
     
-    var defaultNavigationController: DefaultNavigationViewController? {
+    open var defaultNavigationController: DefaultNavigationViewController? {
         return navigationController as? DefaultNavigationViewController
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let parent: DefaultViewController = parent as? DefaultViewController {
@@ -77,11 +77,11 @@ class DefaultCollectionViewController: UICollectionViewController {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    func safeReload(indexPath: IndexPath) {
+    public func safeReload(indexPath: IndexPath) {
         self.collectionView.reloadData()
 //  TODO: still occasionally crash when performing specific reload
 //        if self.collectionView.cellForItem(at: indexPath) != nil {
@@ -90,5 +90,4 @@ class DefaultCollectionViewController: UICollectionViewController {
 //            self.collectionView.reloadData()
 //        }
     }
-
 }

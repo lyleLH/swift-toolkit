@@ -7,25 +7,25 @@
 
 import UIKit
 
-class TransparentDefaultCollectionViewController: DefaultCollectionViewController {
+open class TransparentDefaultCollectionViewController: DefaultCollectionViewController {
 
-    override var navigationBarBackgroundColor: UIColor {
+    open override var navigationBarBackgroundColor: UIColor {
         .clear
     }
     
-    override var navigationBarIsTranslucent: Bool {
+    open override var navigationBarIsTranslucent: Bool {
         true
     }
     
-    override var navigationBarTintColor: UIColor {
+    open override var navigationBarTintColor: UIColor {
         .white
     }
     
-    override var navigationViewBackgroundColor: UIColor {
+    open override var navigationViewBackgroundColor: UIColor {
         .clear
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.backgroundColor = .clear
     }

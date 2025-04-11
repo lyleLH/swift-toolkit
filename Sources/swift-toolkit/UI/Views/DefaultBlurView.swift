@@ -9,56 +9,54 @@
 import UIKit
 import VisualEffectView
 
- class DefaultBlurView: UIView {
+open class DefaultBlurView: UIView {
 
-    let blurEffectView: VisualEffectView = VisualEffectView(frame: .zero)
-    var blurRadius: CGFloat = 10.0 {
+    public let blurEffectView: VisualEffectView = VisualEffectView(frame: .zero)
+    public var blurRadius: CGFloat = 10.0 {
         didSet {
             setNeedsLayout()
         }
     }
-    override init(frame: CGRect) {
+    
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         didInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         didInit()
     }
     
-    func didInit() {
+    public func didInit() {
         addSubview(blurEffectView)
         backgroundColor = .clear
-        
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         Task { @MainActor in
             usingDarkEffect()
         }
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         blurEffectView.frame = bounds
         blurEffectView.blurRadius = blurRadius
-
     }
     
-     @MainActor  func usingDarkEffect() {
+    @MainActor public func usingDarkEffect() {
         blurEffectView.colorTint = .dark
         blurEffectView.colorTintAlpha = 0.5
         blurEffectView.blurRadius = blurRadius
         blurEffectView.scale = 1
     }
     
-     @MainActor func usingWhiteEffect() {
+    @MainActor public func usingWhiteEffect() {
         blurEffectView.colorTint = .white
         blurEffectView.colorTintAlpha = 0.25
         blurEffectView.blurRadius = blurRadius
         blurEffectView.scale = 1
     }
-    
 }

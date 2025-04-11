@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     static let appBlue = UIColor(named: "app-blue")
     static let appGray = UIColor(named: "app-gray")
     static let appWhite = UIColor(named: "app-white")

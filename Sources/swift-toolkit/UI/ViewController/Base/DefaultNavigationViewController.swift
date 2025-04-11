@@ -7,29 +7,28 @@
 
 import UIKit
 
-extension  DefaultNavigationViewController {
-    func applyDefaultNaviAppearance() {
+extension DefaultNavigationViewController {
+    public func applyDefaultNaviAppearance() {
         naviBarSetting()
     }
 }
 
-class DefaultNavigationViewController: UINavigationController, UINavigationControllerDelegate {
+open class DefaultNavigationViewController: UINavigationController, UINavigationControllerDelegate {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
         visibleViewController?.preferredStatusBarStyle ?? .default
     }
     
-    var bgColor: UIColor = .white
-    var isTranslucent = false
+    open var bgColor: UIColor = .white
+    open var isTranslucent = false
+    open var showDressingRoomButton: Bool = true
 
-    var showDressingRoomButton: Bool = true
-
-    var popViewController: UIViewController?
-    override func viewDidLoad() {
+    open var popViewController: UIViewController?
+    
+    open override func viewDidLoad() {
         super.viewDidLoad()
-		self.delegate = self   
+        self.delegate = self   
         naviBarSetting()
-  
     }
     
     private func naviBarSetting() {
@@ -44,7 +43,6 @@ class DefaultNavigationViewController: UINavigationController, UINavigationContr
         navigationBar.backgroundColor = bgColor
         navigationBar.isTranslucent = isTranslucent
         navigationBar.backItem?.backButtonDisplayMode = .minimal
-//        navigationBar.tintColor = UIColor.dark
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font:
                                                 UIFont.preferredFont(forTextStyle: .headline) as Any]
         // swiftlint:disable line_length
@@ -53,23 +51,21 @@ class DefaultNavigationViewController: UINavigationController, UINavigationContr
         // swiftlint:enable line_length
     }
     
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         popViewController = viewController
     }
     
-	func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
- 
-		let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-		viewController.navigationItem.backBarButtonItem = item
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        let item = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        viewController.navigationItem.backBarButtonItem = item
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         if let presentationController = presentationController, 
@@ -81,9 +77,8 @@ class DefaultNavigationViewController: UINavigationController, UINavigationContr
         }
     }
 
-    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+    open override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
-
     }
 }
 
