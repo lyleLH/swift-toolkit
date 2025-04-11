@@ -8,18 +8,21 @@
 import UIKit
 import TwemojiKit
 
+
+
 public extension UIButton {
     @MainActor
-    static func makeTwEmojiButton(emoji: String, size: CGSize) -> UIButton {
+    static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24)) -> UIButton {
         let button = TweMojiButton(type: .custom)
         Task {
            do {
-               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: CGSizeMake(24, 24))
+               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size)
                DispatchQueue.main.async {
                    button.setImage(image, for: .normal)
                }
+           } catch {
+               print("Failed to load emoji for button: \(error)")
            }
-       }
         return button
     }
     
