@@ -29,9 +29,11 @@ public class FontDownloadManager {
     
     private let baseURL = "https://www.googleapis.com/webfonts/v1/webfonts"
     private let registeredFontsKey = "com.swift-toolkit.registeredFonts"
+    private let fontNamesKey = "com.swift-toolkit.fontNames"
     
     private var downloadedFonts: [String: URL] = [:]
     private var registeredFonts: Set<String> = []
+    private var fontNames: [String: [String]] = [:] // 存储字体家族对应的所有字体名称
     
     private var fontsDirectoryURL: URL {
         let applicationSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
@@ -42,6 +44,11 @@ public class FontDownloadManager {
         // 从 UserDefaults 恢复已注册的字体
         if let savedFonts = UserDefaults.standard.stringArray(forKey: registeredFontsKey) {
             registeredFonts = Set(savedFonts)
+        }
+        
+        // 从 UserDefaults 恢复字体名称映射
+        if let savedFontNames = UserDefaults.standard.dictionary(forKey: fontNamesKey) as? [String: [String]] {
+            fontNames = savedFontNames
         }
         
         // 确保字体目录存在
@@ -80,6 +87,10 @@ public class FontDownloadManager {
     
     private func saveRegisteredFonts() {
         UserDefaults.standard.set(Array(registeredFonts), forKey: registeredFontsKey)
+    }
+    
+    private func saveFontNames() {
+        UserDefaults.standard.set(fontNames, forKey: fontNamesKey)
     }
     
     // 搜索字体
@@ -148,6 +159,11 @@ public class FontDownloadManager {
                 if CTFontManagerRegisterGraphicsFont(cgFont, &error) {
                     registeredFonts.insert(fontFamily)
                     saveRegisteredFonts()
+                    
+                    // 获取并保存字体名称
+                    let availableFonts = UIFont.fontNames(forFamilyName: fontFamily)
+                    fontNames[fontFamily] = availableFonts
+                    saveFontNames()
                 } else {
                     throw FontError.fontRegistrationFailed(fontFamily)
                 }
@@ -183,15 +199,25 @@ public class FontDownloadManager {
     
     // 便捷方法：获取已注册的字体
     public func font(named fontFamily: String, size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont? {
-        // 获取该字体家族的所有可用字体名称
+        // 首先尝试从缓存中获取字体名称
+        if let cachedFontNames = fontNames[fontFamily] {
+            let fontName = selectFontName(from: cachedFontNames, weight: weight)
+            if let name = fontName {
+                return UIFont(name: name, size: size)
+            }
+        }
+        
+        // 如果缓存中没有，尝试从系统获取
         let availableFonts = UIFont.fontNames(forFamilyName: fontFamily)
-        
-        // 根据权重选择最合适的字体名称
-        let fontName = selectFontName(from: availableFonts, weight: weight)
-        
-        // 如果找到了合适的字体名称，创建字体
-        if let name = fontName {
-            return UIFont(name: name, size: size)
+        if !availableFonts.isEmpty {
+            // 更新缓存
+            fontNames[fontFamily] = availableFonts
+            saveFontNames()
+            
+            let fontName = selectFontName(from: availableFonts, weight: weight)
+            if let name = fontName {
+                return UIFont(name: name, size: size)
+            }
         }
         
         return nil
