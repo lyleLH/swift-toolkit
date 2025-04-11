@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
 
 	@IBAction func closeClicked(_ sender: Any) {
 		smartDismiss()

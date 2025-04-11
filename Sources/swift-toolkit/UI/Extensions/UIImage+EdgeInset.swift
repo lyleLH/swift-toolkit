@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIImage {
+public extension UIImage {
 	func withInsets(_ insets: UIEdgeInsets) -> UIImage? {
 		UIGraphicsBeginImageContextWithOptions(
 			CGSize(width: size.width + insets.left + insets.right,
@@ -25,9 +25,7 @@ extension UIImage {
 	}
 }
 
-
-
-extension UIImage {
+public extension UIImage {
 
     func addWaterMark(watermarkImage: UIImage = #imageLiteral(resourceName: "Stylespacelogo.png"), watermarkSize: CGSize = CGSize(width: 50, height: 50)) -> UIImage? {
         let backgroundImage = self

@@ -1,19 +1,19 @@
 import UIKit
 
-class FontManagerViewController: DefaultViewController {
+public class FontManagerViewController: DefaultViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var fonts: [GoogleFont] = []
     private var filteredFonts: [GoogleFont] = []
     private var downloadingFonts: Set<String> = []
     
-    private enum LanguageFilter: String, CaseIterable {
+    public enum LanguageFilter: String, CaseIterable {
         case all = "All"
         case latin = "Latin"
         case chinese = "Chinese"
         case japanese = "Japanese"
         case korean = "Korean"
         
-        var title: String {
+        public var title: String {
             switch self {
             case .all: return "所有字体"
             case .latin: return "拉丁字体"
@@ -23,7 +23,7 @@ class FontManagerViewController: DefaultViewController {
             }
         }
         
-        var emoji: String {
+        public var emoji: String {
             switch self {
             case .all: return "🌐"
             case .latin: return "🔤"
@@ -187,11 +187,11 @@ class FontManagerViewController: DefaultViewController {
 
 // MARK: - UICollectionViewDataSource
 extension FontManagerViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredFonts.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FontPreviewCell.reuseIdentifier, for: indexPath) as? FontPreviewCell else {
             return UICollectionViewCell()
         }
@@ -237,7 +237,7 @@ extension FontManagerViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension FontManagerViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 32 // Accounting for section insets
         let font = filteredFonts[indexPath.item]
         
@@ -255,7 +255,7 @@ extension FontManagerViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UISearchResultsUpdating
 extension FontManagerViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
+    public func updateSearchResults(for searchController: UISearchController) {
         filterFonts()
     }
 } 

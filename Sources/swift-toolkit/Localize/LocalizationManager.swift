@@ -1,7 +1,7 @@
 import Foundation
 
-@preconcurrency final class LocalizationManager {
-    @MainActor static let shared = LocalizationManager()
+@preconcurrency public final class LocalizationManager {
+    @MainActor public static let shared = LocalizationManager()
     
     private var bundle: Bundle?
     private let defaultLanguage = "en"
@@ -17,14 +17,14 @@ import Foundation
     /// - Parameter key: The key to look up in Localizable.strings
     /// - Parameter comment: A comment to provide context for translators
     /// - Returns: The localized string
-    func localizedString(_ key: String, comment: String = "") -> String {
+    public func localizedString(_ key: String, comment: String = "") -> String {
         return bundle?.localizedString(forKey: key, value: nil, table: nil) 
             ?? Bundle.main.localizedString(forKey: key, value: nil, table: nil)
     }
     
     /// Changes the app's language
     /// - Parameter language: The language code (e.g., "en", "zh-Hans", "ja")
-    func setLanguage(_ language: String) {
+    public func setLanguage(_ language: String) {
         UserDefaults.standard.set(language, forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
         
@@ -36,7 +36,7 @@ import Foundation
     
     /// Gets the current app language
     /// - Returns: The current language code
-    func getCurrentLanguage() -> String {
+    public func getCurrentLanguage() -> String {
         return UserDefaults.standard.string(forKey: "AppleLanguages") ?? defaultLanguage
     }
     
@@ -51,7 +51,7 @@ import Foundation
     }
     
     /// Get all supported languages
-    func getSupportedLanguages() -> [(code: String, name: String)] {
+    public func getSupportedLanguages() -> [(code: String, name: String)] {
         let languages = Bundle.main.localizations.filter { $0 != "Base" }
         return languages.map { code in
             let locale = Locale(identifier: code)
@@ -62,7 +62,7 @@ import Foundation
 }
 
 // MARK: - Convenience Extension
-extension String {
+public extension String {
     @MainActor var localized: String {
         return LocalizationManager.shared.localizedString(self)
     }

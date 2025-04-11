@@ -1,10 +1,10 @@
 import Foundation
 
 @MainActor
-class FontDownloadManager {
-    static let shared = FontDownloadManager()
+public class FontDownloadManager {
+    public static let shared = FontDownloadManager()
     
-    private let googleFontsAPIKey = "AIzaSyAs2o2XHqo_3lOJGC-CczbyAX3-wdGaFqE"
+    private let googleFontsAPIKey = "XXXXX"
     private let baseURL = "https://www.googleapis.com/webfonts/v1/webfonts"
     
     private var downloadedFonts: [String: URL] = [:]
@@ -12,7 +12,7 @@ class FontDownloadManager {
     private init() {}
     
     // 搜索字体
-    func searchFonts(query: String) async throws -> [GoogleFont] {
+    public func searchFonts(query: String) async throws -> [GoogleFont] {
         var components = URLComponents(string: baseURL)
         components?.queryItems = [
             URLQueryItem(name: "key", value: googleFontsAPIKey),
@@ -34,7 +34,7 @@ class FontDownloadManager {
     }
     
     // 下载字体
-    func downloadFont(font: GoogleFont) async throws -> URL {
+    public func downloadFont(font: GoogleFont) async throws -> URL {
         guard let fontURL = font.regularFontURL,
               let url = URL(string: fontURL) else {
             throw NSError(domain: "Invalid font URL", code: -1)
@@ -55,28 +55,44 @@ class FontDownloadManager {
     }
     
     // 获取已下载的字体列表
-    func getDownloadedFonts() -> [String: URL] {
+    public func getDownloadedFonts() -> [String: URL] {
         return downloadedFonts
     }
 }
 
 // 数据模型
-struct GoogleFontsResponse: Codable {
-    let items: [GoogleFont]
-    let kind: String
+public struct GoogleFontsResponse: Codable {
+    public let items: [GoogleFont]
+    public let kind: String
+    
+    public init(items: [GoogleFont], kind: String) {
+        self.items = items
+        self.kind = kind
+    }
 }
 
-struct GoogleFont: Codable {
-    let family: String
-    let files: [String: String]
-    let category: String
-    let kind: String
-    let version: String
-    let lastModified: String
-    let variants: [String]
-    let subsets: [String]
+public struct GoogleFont: Codable {
+    public let family: String
+    public let files: [String: String]
+    public let category: String
+    public let kind: String
+    public let version: String
+    public let lastModified: String
+    public let variants: [String]
+    public let subsets: [String]
     
-    var regularFontURL: String? {
+    public var regularFontURL: String? {
         return files["regular"] ?? files["400"]
+    }
+    
+    public init(family: String, files: [String: String], category: String, kind: String, version: String, lastModified: String, variants: [String], subsets: [String]) {
+        self.family = family
+        self.files = files
+        self.category = category
+        self.kind = kind
+        self.version = version
+        self.lastModified = lastModified
+        self.variants = variants
+        self.subsets = subsets
     }
 } 

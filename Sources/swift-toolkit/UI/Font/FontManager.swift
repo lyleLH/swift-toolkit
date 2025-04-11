@@ -1,14 +1,12 @@
 import UIKit
 
-
-
-final class FontManager: Sendable {
-    static let shared = FontManager()
+public final class FontManager: Sendable {
+    public static let shared = FontManager()
     
     private init() {}
     
     // MARK: - Font Registration
-    static func registerFonts() {
+    public static func registerFonts() {
         // 打印所有可用的字体名称，用于调试
         print("系统所有字体:")
         UIFont.familyNames.forEach { familyName in
@@ -53,7 +51,7 @@ final class FontManager: Sendable {
     }
     
     // MARK: - Font Styles
-    func poppinsFont(ofSize size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
+    public func poppinsFont(ofSize size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
         let font: CustomFont
         switch weight {
         case .regular:
@@ -72,23 +70,23 @@ final class FontManager: Sendable {
     }
     
     // MARK: - Common Font Styles
-    var titleFont: UIFont {
+    public var titleFont: UIFont {
         return poppinsFont(ofSize: 24, weight: .bold)
     }
     
-    var subtitleFont: UIFont {
+    public var subtitleFont: UIFont {
         return poppinsFont(ofSize: 16, weight: .medium)
     }
     
-    var bodyFont: UIFont {
+    public var bodyFont: UIFont {
         return poppinsFont(ofSize: 14, weight: .regular)
     }
     
-    var headerFont: UIFont {
+    public var headerFont: UIFont {
         return poppinsFont(ofSize: 18, weight: .semibold)
     }
     
-    var headerSubtitleFont: UIFont {
+    public var headerSubtitleFont: UIFont {
         return poppinsFont(ofSize: 14, weight: .regular)
     }
 } 

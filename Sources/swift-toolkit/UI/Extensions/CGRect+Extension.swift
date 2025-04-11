@@ -1,6 +1,6 @@
 import CoreGraphics
 
-extension CGRect {
+public extension CGRect {
     init(center: CGPoint, size: CGSize) {
         self.init(
             x: center.x - size.width/2,

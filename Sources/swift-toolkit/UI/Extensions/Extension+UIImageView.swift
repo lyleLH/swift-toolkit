@@ -9,7 +9,7 @@ import UIKit
 
 @MainActor var imageToCache = NSCache<NSString, UIImage>()
 
-extension UIImageView {
+public extension UIImageView {
     @MainActor  func loadImageViewWithCache(_ urlString: String) {
         self.image = nil
         

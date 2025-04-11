@@ -6,8 +6,27 @@
 //
 
 import UIKit
+import TwemojiKit
 
-extension UIButton {
+public class TweMojiButton: UIButton {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+    
+    private func setup() {
+        translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .scaleAspectFit
+        imageView?.contentMode = .scaleAspectFit
+    }
+}
+
+public extension UIButton {
     @MainActor
     static func makeTwEmojiButton(emoji: String, size: CGSize) -> UIButton {
         let button = TweMojiButton(type: .custom)

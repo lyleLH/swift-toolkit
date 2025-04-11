@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIImage {
+public extension UIImage {
 //    func getPixelColor(pos: CGPoint) -> UIColor? {
 //        guard let cgImage = cgImage,
 //              let dataProvider = cgImage.dataProvider,
@@ -46,7 +46,7 @@ extension UIImage {
 }
 
 // MARK: - CGBitmapInfo Extension
-extension CGBitmapInfo {
+public extension CGBitmapInfo {
     enum ComponentLayout {
         case bgra
         case abgr

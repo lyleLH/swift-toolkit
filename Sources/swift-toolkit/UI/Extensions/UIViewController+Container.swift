@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIViewController {
+public extension UIViewController {
 
     func embedViewController(containerView: UIView,
                              controller: UIViewController,
@@ -33,7 +33,7 @@ extension UIViewController {
 
 }
 
-extension UIView {
+public extension UIView {
 
     func embedView(view: UIView, withConstriant: Bool = true) {
         

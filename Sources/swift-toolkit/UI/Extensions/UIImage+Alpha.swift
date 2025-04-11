@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIImage {
+public extension UIImage {
     var hasAlpha: Bool {
         guard let cgImage = cgImage else { return false }
         let alpha = cgImage.alphaInfo

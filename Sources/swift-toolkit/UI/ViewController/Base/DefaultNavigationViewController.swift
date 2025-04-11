@@ -7,8 +7,8 @@
 
 import UIKit
 
-extension DefaultNavigationViewController {
-    public func applyDefaultNaviAppearance() {
+public extension DefaultNavigationViewController {
+    func applyDefaultNaviAppearance() {
         naviBarSetting()
     }
 }

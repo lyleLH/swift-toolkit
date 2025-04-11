@@ -124,7 +124,7 @@ public extension UIViewController {
 
 }
 
-extension UIViewController: UIAdaptivePresentationControllerDelegate {
+public extension UIViewController: UIAdaptivePresentationControllerDelegate {
     
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
