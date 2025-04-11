@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-class DefaultViewController: UIViewController {
+public class DefaultViewController: UIViewController {
 
     var navigationBarHidden: Bool {
         return false
@@ -38,7 +38,7 @@ class DefaultViewController: UIViewController {
         return navigationController as? DefaultNavigationViewController
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
 //        navigationItem.leftItemsSupplementBackButton = true
@@ -46,7 +46,7 @@ class DefaultViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
  
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if let parent: DefaultViewController = parent as? DefaultViewController {
@@ -82,17 +82,17 @@ class DefaultViewController: UIViewController {
         navigationController?.setNeedsStatusBarAppearanceUpdate()
     }
  
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
        
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
    
     }
@@ -124,7 +124,7 @@ extension UIViewController {
 
 }
 
-extension UIViewController: UIAdaptivePresentationControllerDelegate {
+extension UIViewController: @retroactive UIAdaptivePresentationControllerDelegate {
     
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         navigationController?.setNeedsStatusBarAppearanceUpdate()

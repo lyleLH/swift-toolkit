@@ -1,6 +1,6 @@
 import UIKit
 
-class ColorWithBlurView: UIView {
+public class ColorWithBlurView: UIView {
     // MARK: - Properties
     private let colorView: UIView = {
         let view = UIView()
@@ -17,7 +17,7 @@ class ColorWithBlurView: UIView {
     }()
     
     // MARK: - Public Properties
-    var color: UIColor = .systemBackground.withAlphaComponent(0.6) {
+    public var color: UIColor = .systemBackground.withAlphaComponent(0.6) {
         didSet {
             colorView.backgroundColor = color
         }
@@ -25,12 +25,12 @@ class ColorWithBlurView: UIView {
     
     
     // MARK: - Initialization
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
     }
@@ -67,11 +67,11 @@ class ColorWithBlurView: UIView {
     }
     
     // MARK: - Public Methods
-    func updateBlurIntensity(_ intensity: CGFloat) {
+    public func updateBlurIntensity(_ intensity: CGFloat) {
         blurView.alpha = intensity
     }
     
-    func setBlurHidden(_ hidden: Bool, animated: Bool = true) {
+    public func setBlurHidden(_ hidden: Bool, animated: Bool = true) {
         if animated {
             UIView.animate(withDuration: 0.3) {
                 self.blurView.alpha = hidden ? 0 : 1
