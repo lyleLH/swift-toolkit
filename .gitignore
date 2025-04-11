@@ -12,5 +12,3 @@ DerivedData/
 .env.local
 .env.*.local
 
-# API Keys
-*APIKeys.swift
