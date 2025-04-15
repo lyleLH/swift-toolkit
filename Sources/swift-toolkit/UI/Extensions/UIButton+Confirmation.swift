@@ -41,7 +41,6 @@ public extension UIButton {
         }
         button.setTitle(title, for: .normal)
         button.setTitleColor(style.titleColor, for: .normal)
-        button.titleLabel?.font = CustomFont.poppinsMedium.font(size: 15)
         
         // 设置样式
         button.backgroundColor = style.backgroundColor

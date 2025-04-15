@@ -104,7 +104,6 @@ public class AlertViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = titleText
-        label.font = CustomFont.poppinsSemiBold.font(size: 17)
         label.textAlignment = .center
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -123,7 +122,6 @@ public class AlertViewController: UIViewController {
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.text = messageText
-        label.font =  CustomFont.poppinsRegular.font(size: 15)
         label.textColor = .mainGreen
         label.numberOfLines = 0
         label.textAlignment = .center
