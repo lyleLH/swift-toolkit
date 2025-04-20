@@ -19,7 +19,8 @@ let package = Package(
         .package(url: "https://github.com/relatedcode/ProgressHUD.git", from: "14.1.3"),
         .package(url: "https://github.com/lyleLH/VisualEffectView.git", branch: "master"),
         .package(url: "https://github.com/lyleLH/TwemojiKit.git", branch: "master"),
-        .package(url: "https://github.com/SVGKit/SVGKit.git", branch: "3.x")
+        .package(url: "https://github.com/SVGKit/SVGKit.git", branch: "3.x"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.18.10")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -30,7 +31,8 @@ let package = Package(
                 .product(name: "ProgressHUD", package: "ProgressHUD"),
                 .product(name: "VisualEffectView", package: "VisualEffectView"),
                 .product(name: "TwemojiKit", package: "TwemojiKit"),
-                .product(name: "SVGKit", package: "SVGKit")
+                .product(name: "SVGKit", package: "SVGKit"),
+                .product(name: "SDWebImage", package: "SDWebImage")
             ],
             path: "Sources/swift-toolkit"),
         .testTarget(
