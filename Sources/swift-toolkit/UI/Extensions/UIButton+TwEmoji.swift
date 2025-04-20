@@ -12,11 +12,11 @@ import TwemojiKit
 
 public extension UIButton {
     @MainActor
-    static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24)) -> UIButton {
+    static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24), forThumbnail: Bool = false) -> UIButton {
         let button = TweMojiButton(type: .custom)
         Task {
            do {
-               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size ?? CGSize(width: 24, height: 24))
+               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size ?? CGSize(width: 24, height: 24),forThumbnail: forThumbnail)
                DispatchQueue.main.async {
                    button.setImage(image, for: .normal)
                }
@@ -60,7 +60,7 @@ public extension UIButton {
         // 异步加载 Twemoji
         Task {
             do {
-                let image = try await UIImage.loadTwEmoji(emoji: emoji, size: CGSize(width: 24, height: 24))
+                let image = try await UIImage.loadTwEmoji(emoji: emoji, size: CGSize(width: 24, height: 24), forThumbnail: false)
                 button.setImage(image, for: .normal)
                 button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
             } catch {
