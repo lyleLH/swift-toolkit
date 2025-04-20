@@ -112,12 +112,13 @@ public extension UIImage {
                     return createEmojiImage(from: emoji, size: size)
                 }
                 
-                // 使用 SDWebImage 缓存图片
+                // 使用 SDWebImage 缓存图片，但使用自定义的缓存键来避免 PNG 解码问题
+                let cacheKey = "svg_\(getCacheKey(emoji: emoji, isStandard: !forThumbnail))"
                 SDImageCache.shared.store(image, forKey: cacheKey, completion: nil)
                 
                 // 如果是标准尺寸，同时生成并缓存缩略图
                 if !forThumbnail {
-                    let thumbnailKey = getCacheKey(emoji: emoji, isStandard: false)
+                    let thumbnailKey = "svg_\(getCacheKey(emoji: emoji, isStandard: false))"
                     svgImage.size = thumbnailSize
                     if let thumbnailImage = svgImage.uiImage {
                         SDImageCache.shared.store(thumbnailImage, forKey: thumbnailKey, completion: nil)
