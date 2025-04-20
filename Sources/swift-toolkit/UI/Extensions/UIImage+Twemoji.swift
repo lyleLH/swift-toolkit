@@ -39,7 +39,11 @@ public extension UIImage {
     private static let cacheFolderName = "TwemojiCache"
     private static let maxConcurrentLoads = 5
     private static let loadSemaphore = DispatchSemaphore(value: maxConcurrentLoads)
-    private static let loadQueue = DispatchQueue(label: "com.flyercard.twemoji.load", attributes: .concurrent)
+    private static let loadQueue = DispatchQueue(
+        label: "com.flyercard.twemoji.load",
+        qos: .userInitiated,
+        attributes: .concurrent
+    )
     private static let standardSize = CGSize(width: 512, height: 512)
     private static let thumbnailSize = CGSize(width: 64, height: 64)
     
