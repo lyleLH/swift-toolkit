@@ -7,6 +7,7 @@
 
 import UIKit
 import TwemojiKit
+import SVGKit
 import SDWebImage
 
 private actor TwemojiTaskManager {
@@ -92,36 +93,38 @@ public extension UIImage {
                     return createEmojiImage(from: emoji, size: size)
                 }
                 
-                // 使用 SDWebImage 下载图片
-                return try await withCheckedThrowingContinuation { continuation in
-                    SDWebImageManager.shared.loadImage(
-                        with: url,
-                        options: [.retryFailed, .highPriority],
-                        progress: nil
-                    ) { image, data, error, cacheType, finished, imageURL in
-                        if let error = error {
-                            continuation.resume(throwing: error)
-                            return
-                        }
-                        
-                        guard let image = image else {
-                            continuation.resume(throwing: NSError(domain: "com.flyercard.twemoji", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to load image"]))
-                            return
-                        }
-                        
-                        // 缓存图片
-                        SDImageCache.shared.store(image, forKey: cacheKey, completion: nil)
-                        
-                        // 如果是标准尺寸，同时生成并缓存缩略图
-                        if !forThumbnail {
-                            let thumbnailKey = getCacheKey(emoji: emoji, isStandard: false)
-                            let thumbnailImage = image.resize(targetSize: thumbnailSize)
-                            SDImageCache.shared.store(thumbnailImage, forKey: thumbnailKey, completion: nil)
-                        }
-                        
-                        continuation.resume(returning: image.resize(targetSize: size))
+                // 使用 SDWebImage 下载 SVG 数据
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                // 创建SVG源
+                let source = SVGKSourceNSData.source(from: data, urlForRelativeLinks: url)
+                guard let svgImage = SVGKImage(source: source) else {
+                    await TwemojiTaskManager.shared.markAsFailed(cacheKey)
+                    return createEmojiImage(from: emoji, size: size)
+                }
+                
+                // 设置SVG图像的尺寸
+                svgImage.size = targetSize
+                
+                // 获取UIImage并缓存
+                guard let image = svgImage.uiImage else {
+                    await TwemojiTaskManager.shared.markAsFailed(cacheKey)
+                    return createEmojiImage(from: emoji, size: size)
+                }
+                
+                // 使用 SDWebImage 缓存图片
+                SDImageCache.shared.store(image, forKey: cacheKey, completion: nil)
+                
+                // 如果是标准尺寸，同时生成并缓存缩略图
+                if !forThumbnail {
+                    let thumbnailKey = getCacheKey(emoji: emoji, isStandard: false)
+                    svgImage.size = thumbnailSize
+                    if let thumbnailImage = svgImage.uiImage {
+                        SDImageCache.shared.store(thumbnailImage, forKey: thumbnailKey, completion: nil)
                     }
                 }
+                
+                return image.resize(targetSize: size)
             } catch {
                 await TwemojiTaskManager.shared.markAsFailed(cacheKey)
                 return createEmojiImage(from: emoji, size: size)
