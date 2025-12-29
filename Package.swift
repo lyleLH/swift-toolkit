@@ -22,9 +22,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/relatedcode/ProgressHUD.git", from: "14.1.3"),
         .package(url: "https://github.com/lyleLH/VisualEffectView.git", exact: "1.0.0"),
-        .package(url: "https://github.com/lyleLH/TwemojiKit.git", revision: "ccb794c6888a373474075d58035a4382116bec8a"),
-        .package(url: "https://github.com/SVGKit/SVGKit.git", from: "3.0.0"),
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.18.10")
+        .package(url: "https://github.com/lyleLH/TwemojiKit.git", exact: "1.0.0")
     ],
     targets: [
         // Core Target
@@ -40,9 +38,7 @@ let package = Package(
                 "SwiftToolkit",
                 .product(name: "ProgressHUD", package: "ProgressHUD"),
                 .product(name: "VisualEffectView", package: "VisualEffectView"),
-                .product(name: "TwemojiKit", package: "TwemojiKit"),
-                .product(name: "SVGKit", package: "SVGKit"),
-                .product(name: "SDWebImage", package: "SDWebImage")
+                .product(name: "TwemojiKit", package: "TwemojiKit")
             ],
             path: "Sources/SwiftToolkitUI"
         ),
