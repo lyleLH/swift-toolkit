@@ -1,5 +1,5 @@
 {
-  "originHash" : "7355d1e456a02b2a90c35fc4746c194cfb950c910c786ca8c271b7432eb00dab",
+  "originHash" : "fed0603816688c019997ae735874c35a1422de3ee14f67456ecf323f6cafc4ed",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lyleLH/TwemojiKit.git",
       "state" : {
-        "revision" : "779e7541530cfff7c9d5533021a8ba277637a1c0",
-        "version" : "1.0.0"
+        "revision" : "b5f591b5ae12c5b30deadc85b7c5cd09e7f142a0",
+        "version" : "1.0.1"
       }
     },
     {
@@ -61,7 +61,7 @@
       "location" : "https://github.com/lyleLH/VisualEffectView.git",
       "state" : {
         "revision" : "3cc067c6fd75e805f83f8b17ccb572dffffa2384",
-        "version" : "1.0.0"
+        "version" : "1.0.1"
       }
     }
   ],

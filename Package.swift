@@ -21,8 +21,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/relatedcode/ProgressHUD.git", from: "14.1.3"),
-        .package(url: "https://github.com/lyleLH/VisualEffectView.git", exact: "1.0.0"),
-        .package(url: "https://github.com/lyleLH/TwemojiKit.git", exact: "1.0.0")
+        .package(url: "https://github.com/lyleLH/VisualEffectView.git", exact: "1.0.1"),
+        .package(url: "https://github.com/lyleLH/TwemojiKit.git", exact: "1.0.1")
     ],
     targets: [
         // Core Target
