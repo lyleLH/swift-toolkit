@@ -23,6 +23,13 @@ struct MyApp: App {
                                 .ignoresSafeArea()
                         }
                     }
+                    
+                    Section(header: Text("Navigation & Layout")) {
+                        NavigationLink("TabBar Controller Demo") {
+                            TabBarDemoWrapper()
+                                .ignoresSafeArea()
+                        }
+                    }
                 }
                 .navigationTitle("SwiftToolkit Examples")
             }
@@ -52,4 +59,12 @@ struct ButtonsExampleWrapper: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: ButtonsExampleViewController, context: Context) {}
+}
+
+struct TabBarDemoWrapper: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> TabBarDemoViewController {
+        return TabBarDemoViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: TabBarDemoViewController, context: Context) {}
 }
