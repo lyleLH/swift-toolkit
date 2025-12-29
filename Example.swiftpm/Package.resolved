@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lyleLH/TwemojiKit.git",
       "state" : {
-        "revision" : "779e7541530cfff7c9d5533021a8ba277637a1c0",
-        "version" : "1.0.0"
+        "revision" : "b5f591b5ae12c5b30deadc85b7c5cd09e7f142a0",
+        "version" : "1.0.1"
       }
     },
     {
@@ -60,7 +60,7 @@
       "location" : "https://github.com/lyleLH/VisualEffectView.git",
       "state" : {
         "revision" : "3cc067c6fd75e805f83f8b17ccb572dffffa2384",
-        "version" : "1.0.0"
+        "version" : "1.0.1"
       }
     }
   ],

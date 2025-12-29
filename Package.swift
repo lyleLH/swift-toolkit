@@ -6,8 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SwiftToolkit",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13)
+        .iOS(.v16)
     ],
     products: [
         // Core library containing non-UI utilities
