@@ -30,16 +30,20 @@ func testDateUtilities() {
 func testNetworkTools() async {
     print("\n测试网络工具:")
     let networkManager = NetworkManager.shared
-    networkManager.get(url: "https://api.github.com/users/apple") { (result: Result<GitHubUser, NetworkError>) in
-        switch result {
-        case .success(let user):
-            print("网络请求成功:")
-            print("用户名: \(user.login)")
-            print("ID: \(user.id)")
-            print("仓库数: \(user.publicRepos)")
-            print("关注者: \(user.followers)")
-        case .failure(let error):
-            print("网络请求失败: \(error)")
+    
+    await withCheckedContinuation { continuation in
+        networkManager.get(url: "https://api.github.com/users/apple") { (result: Result<GitHubUser, NetworkError>) in
+            switch result {
+            case .success(let user):
+                print("网络请求成功:")
+                print("用户名: \(user.login)")
+                print("ID: \(user.id)")
+                print("仓库数: \(user.publicRepos)")
+                print("关注者: \(user.followers)")
+            case .failure(let error):
+                print("网络请求失败: \(error)")
+            }
+            continuation.resume()
         }
     }
 }
@@ -50,9 +54,4 @@ testStringUtilities()
 testDateUtilities()
 
 // 运行异步测试
-Task {
-    await testNetworkTools()
-    // 等待5秒以确保网络请求完成
-    try? await Task.sleep(nanoseconds: 5_000_000_000)
-    exit(0)
-} 
+await testNetworkTools()

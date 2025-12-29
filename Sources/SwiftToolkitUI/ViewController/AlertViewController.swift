@@ -247,8 +247,8 @@ public class AlertViewController: UIViewController {
 }
 
 // MARK: - Factory Methods
-extension AlertViewController {
-    static func makeSuccessAlert(
+public extension AlertViewController {
+    public static func makeSuccessAlert(
         title: String,
         message: String,
         action: Selector? = nil,
@@ -261,7 +261,7 @@ extension AlertViewController {
         return AlertViewController(title: title, message: message, buttons: buttons, style: .alert, target: target)
     }
     
-    static func makeDeleteConfirmation(
+    public static func makeDeleteConfirmation(
         deleteAction: Selector? = nil,
         cancelAction: Selector? = nil,
         target: NSObject? = nil
@@ -279,7 +279,7 @@ extension AlertViewController {
         )
     }
     
-    static func makeDiscardChanges(
+    public static func makeDiscardChanges(
         discardAction: Selector? = nil,
         cancelAction: Selector? = nil,
         target: NSObject? = nil
@@ -297,7 +297,7 @@ extension AlertViewController {
         )
     }
     
-    static func makeCustomAlert(
+    public static func makeCustomAlert(
         title: String,
         message: String,
         primaryButton: (title: String, emoji: String?, action: Selector?),
@@ -313,4 +313,4 @@ extension AlertViewController {
         )
         return AlertViewController(title: title, message: message, buttons: buttons, style: .actionSheet, target: target)
     }
-} 
+}

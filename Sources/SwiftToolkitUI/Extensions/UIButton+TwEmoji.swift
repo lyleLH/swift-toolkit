@@ -12,7 +12,7 @@ import TwemojiKit
 
 public extension UIButton {
     @MainActor
-    static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24), forThumbnail: Bool = false) -> UIButton {
+    public static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24), forThumbnail: Bool = false) -> UIButton {
         let button = TweMojiButton(type: .custom)
         Task {
            do {
@@ -26,7 +26,7 @@ public extension UIButton {
     }
     
     @MainActor
-    static func makeNavigationButton(button: UIButton) -> UIButton {
+    public static func makeNavigationButton(button: UIButton) -> UIButton {
         button.translatesAutoresizingMaskIntoConstraints = false
         // 设置样式
         button.backgroundColor = .systemBackground
@@ -40,7 +40,7 @@ public extension UIButton {
     }
     
     @MainActor
-    static func makeConfirmationButton(title: String, emoji: String, style: ConfirmationButtonStyle) -> UIButton {
+    public static func makeConfirmationButton(title: String, emoji: String, style: ConfirmationButtonStyle) -> UIButton {
         let button = UIButton(type: .custom)
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
@@ -71,7 +71,7 @@ public extension UIButton {
         return button
     }
     
-    enum ConfirmationButtonStyle {
+    public enum ConfirmationButtonStyle {
         case cancel
         case destructive
     }

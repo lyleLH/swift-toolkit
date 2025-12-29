@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftToolkit
 
 public extension UIImage {
 	func withInsets(_ insets: UIEdgeInsets) -> UIImage? {

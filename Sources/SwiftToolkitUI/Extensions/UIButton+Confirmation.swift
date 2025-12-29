@@ -1,12 +1,12 @@
 import UIKit
 
 public extension UIButton {
-    enum ConfirmationStyle {
+    public enum ConfirmationStyle {
         case primary
         case destructive
         case cancel
         
-        var backgroundColor: UIColor {
+        public var backgroundColor: UIColor {
             switch self {
             case .primary:
                 return .mainGreen
@@ -17,7 +17,7 @@ public extension UIButton {
             }
         }
         
-        var titleColor: UIColor {
+        public var titleColor: UIColor {
             switch self {
             case .cancel:
                 return .label
@@ -27,7 +27,7 @@ public extension UIButton {
         }
     }
     
-    static func makeConfirmationButton(
+    public static func makeConfirmationButton(
         title: String,
         emoji: String?,
         style: ConfirmationStyle
@@ -48,4 +48,4 @@ public extension UIButton {
         
         return button
     }
-} 
+}

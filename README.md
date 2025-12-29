@@ -4,10 +4,8 @@
 
 ## 功能模块
 
-- **UI**: UI相关的扩展和组件
-- **Networking**: 网络请求相关的工具
-- **Utilities**: 通用工具函数
-- **Extensions**: Swift标准库的扩展
+- **SwiftToolkit**: 核心逻辑库，包含 Utilities, Extensions, Networking 等。
+- **SwiftToolkitUI**: UI 组件库，依赖 UIKit，包含 HUD, Alert, Custom Buttons, Extensions 等。
 
 ## 安装
 
@@ -17,32 +15,59 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-username/swift-toolkit.git", from: "1.0.0")
+    .package(url: "https://github.com/lyleLH/swift-toolkit.git", from: "1.0.0")
 ]
 ```
+
+然后将 `SwiftToolkit` 或 `SwiftToolkitUI` 添加到您的 target 依赖中。
 
 ### Xcode
 
 1. 在Xcode中打开您的项目
 2. 选择 File > Add Packages...
-3. 在搜索框中输入：`https://github.com/your-username/swift-toolkit.git`
-4. 选择版本规则
+3. 在搜索框中输入：`https://github.com/lyleLH/swift-toolkit.git`
+4. 选择版本规则 (例如 1.0.0)
 5. 点击 Add Package
+
+## 本地开发与测试 (Example App)
+
+本项目包含一个可以直接运行的本地示例工程 `Example.swiftpm`，用于测试 UI 组件和快速迭代开发。
+
+### 如何运行
+
+1. 确保已安装 Xcode 14+。
+2. 双击项目根目录下的 `Example.swiftpm` 文件夹，或在终端运行：
+   ```bash
+   open Example.swiftpm
+   ```
+3. Xcode 打开后，选择模拟器并运行 (Cmd+R)。
+4. 您将看到一个包含 HUD、Alert、Buttons 等演示页面的 App。
+
+这个示例工程通过本地路径引用了 `swift-toolkit`，因此您在 `Sources` 目录下的任何修改都会立即反映在示例 App 中。
 
 ## 使用示例
 
+### UI (SwiftToolkitUI)
+
+```swift
+import SwiftToolkitUI
+
+// 显示 HUD
+HUD.showLoading("Loading...")
+HUD.showSuccess("Done!")
+
+// 显示 Alert
+let alert = AlertViewController.makeSuccessAlert(title: "Success", message: "Operation completed")
+present(alert, animated: true)
+
+// 创建自定义按钮
+let btn = UIButton.makeConfirmationButton(title: "Confirm", emoji: "✅", style: .primary)
+```
+
+### Core (SwiftToolkit)
+
 ```swift
 import SwiftToolkit
-
-// 使用UI扩展
-let view = UIView()
-view.addCornerRadius(10)
-
-// 使用网络工具
-let networkManager = NetworkManager()
-networkManager.request(url: "https://api.example.com") { result in
-    // 处理结果
-}
 
 // 使用工具函数
 let date = Date()
@@ -61,27 +86,6 @@ let formattedDate = date.formattedString()
 ## 许可证
 
 MIT License
-
-## API Key Setup
-
-To use the Google Fonts API, you need to set up your API key:
-
-1. Get your Google Fonts API key from the [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a `.env` file in the project root directory
-3. Add your API key to the `.env` file:
-   ```
-   GOOGLE_FONTS_API_KEY=your_api_key_here
-   ```
-
-## Security Notice
-
-Never commit your actual API key to the repository. The `.env` file is already in `.gitignore` to prevent accidental commits.
-
-## Development
-
-1. Clone the repository
-2. Copy `.env.example` to `.env` and add your API key
-3. Build and run the project
 
 ## 环境变量设置
 
@@ -127,4 +131,4 @@ Never commit your actual API key to the repository. The `.env` file is already i
 
 1. 克隆仓库
 2. 设置环境变量
-3. 构建和运行项目 
+3. 构建和运行项目

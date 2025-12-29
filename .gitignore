@@ -22,3 +22,5 @@ DerivedData/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
+# Local Example App configuration
+Example.swiftpm/.swiftpm/
