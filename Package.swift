@@ -16,7 +16,6 @@ let package = Package(
         // UI library containing UI components and extensions
         .library(
             name: "SwiftToolkitUI",
-            type: .dynamic,
             targets: ["SwiftToolkitUI"]),
     ],
     dependencies: [
