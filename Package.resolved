@@ -1,5 +1,4 @@
 {
-  "originHash" : "fed0603816688c019997ae735874c35a1422de3ee14f67456ecf323f6cafc4ed",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -51,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lyleLH/TwemojiKit.git",
       "state" : {
-        "revision" : "b5f591b5ae12c5b30deadc85b7c5cd09e7f142a0",
-        "version" : "1.0.1"
+        "revision" : "4a539596149a8318578b42afbe43c0f167d85d56",
+        "version" : "0.3.4"
       }
     },
     {
@@ -65,5 +64,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
