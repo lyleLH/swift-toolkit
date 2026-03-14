@@ -9,7 +9,7 @@
 import UIKit
 import SwiftToolkit
 
-protocol CardTabBarDelegate: AnyObject {
+public protocol CardTabBarDelegate: AnyObject {
     func cardTabBar(_ sender: PTCardTabBar, didSelectItemAt index: Int)
 }
 

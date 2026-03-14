@@ -48,7 +48,9 @@ public extension UIImage {
     static func downloadImage(urlString: String) async throws -> UIImage {
 
         // Attempt to download the image first.
-        let imageUrl = URL(string: urlString)!
+        guard let imageUrl = URL(string: urlString) else {
+            throw LocalError(title: "invalid URL: \(urlString)")
+        }
         let imageRequest = URLRequest(url: imageUrl)
         let (imageData, imageResponse) = try await URLSession.shared.data(for: imageRequest)
         guard let image = UIImage(data: imageData), (imageResponse as? HTTPURLResponse)?.statusCode == 200 else {
@@ -100,7 +102,8 @@ public extension UIImage {
         bitmap.scaleBy(x: 1.0, y: -1.0)
         
         let origin = CGPoint(x: -size.width / 2, y: -size.width / 2)
-        bitmap.draw(cgImage!, in: CGRect(origin: origin, size: size))
+        guard let cg = cgImage else { return nil }
+        bitmap.draw(cg, in: CGRect(origin: origin, size: size))
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -147,14 +150,15 @@ public extension UIImage {
         
         let size = CGSize(width: imageWidth, height: imageHeight)
         
-        let refWidth : CGFloat = CGFloat(image.cgImage!.width)
-        let refHeight : CGFloat = CGFloat(image.cgImage!.height)
-        
+        guard let cg = image.cgImage else { return nil }
+        let refWidth : CGFloat = CGFloat(cg.width)
+        let refHeight : CGFloat = CGFloat(cg.height)
+
         let x = (refWidth - size.width) / 2
         let y = (refHeight - size.height) / 2
-        
+
         let cropRect = CGRect(x: x, y: y, width: size.height, height: size.width)
-        if let imageRef = image.cgImage!.cropping(to: cropRect) {
+        if let imageRef = cg.cropping(to: cropRect) {
             return UIImage(cgImage: imageRef, scale: 0, orientation: image.imageOrientation)
         }
         return nil

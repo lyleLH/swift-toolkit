@@ -136,7 +136,7 @@ open class PTCardTabBarController: UITabBarController {
 }
 
 extension PTCardTabBarController: @preconcurrency CardTabBarDelegate {
-    func cardTabBar(_ sender: PTCardTabBar, didSelectItemAt index: Int) {
+    public func cardTabBar(_ sender: PTCardTabBar, didSelectItemAt index: Int) {
         self.selectedIndex = index
     }
 }

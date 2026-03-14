@@ -14,14 +14,15 @@ public extension UIButton {
     @MainActor
     public static func makeTwEmojiButton(emoji: String, size: CGSize? = CGSize(width: 24, height: 24), forThumbnail: Bool = false) -> UIButton {
         let button = TweMojiButton(type: .custom)
-        Task {
-           do {
-               let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size ?? CGSize(width: 24, height: 24),forThumbnail: forThumbnail)
-               DispatchQueue.main.async {
-                   button.setImage(image, for: .normal)
-               }
-           }
-       }
+        Task { @MainActor in
+            do {
+                let image = try await UIImage.loadTwEmoji(emoji: emoji, size: size ?? CGSize(width: 24, height: 24), forThumbnail: forThumbnail)
+                button.setImage(image, for: .normal)
+            } catch {
+                // Fallback: show native emoji as title
+                button.setTitle(emoji, for: .normal)
+            }
+        }
         return button
     }
     
