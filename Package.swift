@@ -20,17 +20,17 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/relatedcode/ProgressHUD.git", from: "14.1.3"),
-        .package(url: "https://github.com/lyleLH/VisualEffectView.git", exact: "1.0.1"),
-        .package(url: "https://github.com/lyleLH/TwemojiKit.git", from: "0.3.3")
+        .package(url: "https://github.com/lyleLH/VisualEffectView.git", from: "1.0.1"),
+        .package(url: "https://github.com/lyleLH/TwemojiKit.git", from: "0.3.4")
     ],
     targets: [
-        // Core Target
+        // Core Target — no UI dependencies
         .target(
             name: "SwiftToolkit",
             dependencies: [],
             path: "Sources/SwiftToolkit"
         ),
-        // UI Target
+        // UI Target — all UI dependencies here
         .target(
             name: "SwiftToolkitUI",
             dependencies: [
